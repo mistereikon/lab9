@@ -1,0 +1,42 @@
+<!-- templates/base.html -->
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Головна</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('account') }}">Мій профіль</a></li>
+                <li><a href="{{ url_for('logout') }}">Вихід</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Вхід</a></li>
+                <li><a href="{{ url_for('register') }}">Реєстрація</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+                {% if 'error' in message.lower() or login_error or registration_error or changedata %}
+                    <div class="flash-message error">{{ message }}</div>
+                {% else %}
+                    <div class="flash-message success">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>

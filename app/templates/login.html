@@ -1,0 +1,21 @@
+<!-- templates/login.html -->
+{% extends "base.html" %}
+
+{% block title %}Вхід{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Вхід</h1>
+        <form method="POST" action="{{ url_for('login') }}">
+            {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
+            <label for="username">Ім'я користувача:</label>
+            {{ form.username }}
+            <br>
+            <label for="password">Пароль:</label>
+            {{ form.password }}
+            <br>
+            <button type="submit">Вхід</button>
+        </form>
+    </div>
+{% endblock %}

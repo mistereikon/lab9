@@ -1,0 +1,28 @@
+<!-- templates/register.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Реєстрація{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Реєстрація</h1>
+
+        <form method="POST" action="{{ url_for('register') }}">
+            {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
+            <label for="username">Ім'я користувача:</label>
+            {{ form.username }}
+            <br>
+            <label for="password">Пароль:</label>
+            {{ form.password }}
+            <br>
+            <label for="confirm_password">Підтвердити пароль:</label>
+            {{ form.confirm_password }}
+            <br>
+            <button type="submit">Зареєструватися</button>
+        </form>
+    </div>
+
+{% endblock %}

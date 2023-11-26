@@ -1,0 +1,46 @@
+<!-- account.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Профіль{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <center><h1>Ласкаво просимо до вашого профілю, {{ current_user.username }}!</h1>
+        <p>Це ваша сторінка профілю.</p></center>
+
+        {% if current_user.photo_path %}
+            <img src="{{ url_for('uploaded_file', filename=os.path.basename(current_user.photo_path)) }}" alt="User Photo" class="img-fluid user-photo">
+        {% else %}
+            <p>Ви ще не завантажили фото.</p>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('account') }}" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
+            <label for="photo">Завантажте нове фото:</label>
+            {{ form.photo }}
+            <br>
+            <button type="submit">Завантажити фото</button>
+        </form>
+
+        <form method="POST" action="{{ url_for('account') }}">
+            {{ change_login_password_form.hidden_tag() }}
+            {{ change_login_password_form.csrf_token }}
+            <label for="new_login">Новий логін:</label>
+            {{ change_login_password_form.new_login }}
+            <br>
+            <label for="new_password">Новий пароль:</label>
+            {{ change_login_password_form.new_password }}
+            <br>
+            <button type="submit">Змінити логін та пароль</button>
+        </form>
+
+        <p>Останній раз був Online: {{ current_user.last_seen }}</p>
+
+{% endblock %}

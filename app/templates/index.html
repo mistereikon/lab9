@@ -1,0 +1,19 @@
+<!-- templates/index.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Ласкаво просимо на Головну сторінку</h1>
+        {% if current_user.is_authenticated %}
+            <p>Привіт, {{ current_user.username }}!</p>
+        {% else %}
+            <p>Будь ласка, увійдіть або зареєструйтесь.</p>
+        {% endif %}
+        {% for user in users %}
+        <p>{{ user.username }} - {{ user.status }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}
